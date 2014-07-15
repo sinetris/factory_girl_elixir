@@ -13,7 +13,7 @@ Add FactoryGirlElixir as a dependency in your `mix.exs` file.
 ```elixir
 defp deps do
   [
-    {:factory_girl_elixir, , github: "sinetris/factory_girl_elixir"}
+    {:factory_girl_elixir, github: "sinetris/factory_girl_elixir"}
   ]
 end
 ```
