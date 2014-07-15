@@ -1,5 +1,7 @@
 # FactoryGirlElixir
 
+[![Build Status](https://travis-ci.org/sinetris/factory_girl_elixir.svg?branch=master)](https://travis-ci.org/sinetris/factory_girl_elixir)
+
 Minimal implementation of Ruby's [factory_girl](http://github.com/thoughtbot/factory_girl) in Elixir.
 
 This is a rewrite of the [factory_boy](https://github.com/inkr/factory_boy) project to make it work on Elixir v0.14.x.
