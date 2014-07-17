@@ -6,6 +6,16 @@ defmodule FactoryGirlElixir.Factory do
       def attributes_for(factory) do
         FactoryGirlElixir.Worker.get(factory)
       end
+
+      def parametrize(factory) do
+        Enum.traverse(factory, &parametrized/1)
+      end
+
+      defp parametrized({key, val})
+      when is_atom(key) do
+        {Atom.to_string(key), val}
+      end
+      defp parametrized(attr), do: attr
     end
   end
 

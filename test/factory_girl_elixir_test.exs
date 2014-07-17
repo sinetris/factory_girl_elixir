@@ -25,4 +25,16 @@ defmodule FactoryGirlElixirTest do
     assert "foo1@example.com" == Factory.attributes_for(:user).email
     assert "foo2@example.com" == Factory.attributes_for(:user).email
   end
+
+  test "parametrize simple factory" do
+    parametrized_assets = %{"name" => "bob"}
+    assert parametrized_assets == Factory.attributes_for(:assets) |> Factory.parametrize
+  end
+
+  test "parametrize factory with sequence" do
+    FactoryGirlElixir.Worker.reset
+
+    parametrized_user = %{"email" => "foo1@example.com", "password" => "secret"}
+    assert parametrized_user == Factory.attributes_for(:user) |> Factory.parametrize
+  end
 end
