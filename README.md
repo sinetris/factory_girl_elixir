@@ -54,5 +54,6 @@ end
 Then query the module to get a list of attributes for your record
 
 ```elixir
-Factory.attributes_for(:user) #=> [password: "secret", username: "username1", email: "foo1@example.com"]
+user = Factory.attributes_for(:user) #=> %{password: "secret", username: "username1", email: "foo1@example.com"}
+parametrized_user = user |> Factory.parametrize #=> %{"email" => "foo1@example.com", "password" => "secret", "username" => "username1"}
 ```
