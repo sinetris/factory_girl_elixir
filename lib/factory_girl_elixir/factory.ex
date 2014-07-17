@@ -3,8 +3,8 @@ defmodule FactoryGirlElixir.Factory do
     quote do
       import unquote(__MODULE__)
 
-      def attributes_for(field) do
-        FactoryGirlElixir.Worker.get(field)
+      def attributes_for(factory) do
+        FactoryGirlElixir.Worker.get(factory)
       end
     end
   end

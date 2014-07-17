@@ -11,12 +11,12 @@ defmodule FactoryGirlElixir.Worker do
     {:ok, state}
   end
 
-  def put(key, value) do
-    GenServer.call(:factory_girl, {:put, {key, value}})
+  def put(factory, attribute) do
+    GenServer.call(:factory_girl, {:put, {factory, attribute}})
   end
 
-  def get(key) do
-    GenServer.call(:factory_girl, {:get, key})
+  def get(factory) do
+    GenServer.call(:factory_girl, {:get, factory})
   end
 
   def reset do
@@ -41,24 +41,24 @@ defmodule FactoryGirlElixir.Worker do
     attributes = Keyword.get(state[:attributes], factory) || []
 
     counters = state[:counters][factory] || []
-    {counters1, reply} = expand_functions(attributes, counters)
+    {counters, reply} = expand_functions(attributes, counters)
 
-    new_state = Keyword.put(state, :counters, Keyword.put(state[:counters], factory, counters1))
+    new_state = Keyword.put(state, :counters, Keyword.put(state[:counters], factory, counters))
     {:reply, reply, new_state}
   end
 
-  defp expand_functions(attrs, counters) do
-    expand_functions(attrs, counters, [])
+  defp expand_functions(attributes, counters) do
+    expand_functions(attributes, counters, [])
   end
 
   defp expand_functions([], counters, acc), do: {counters, acc}
-  defp expand_functions([{attr, fun}|tail], counters, acc)
-  when is_function(fun) do
-    seq_next = (Keyword.get(counters, attr) || 0) + 1
-    counters1 = Keyword.put(counters, attr, seq_next)
-    expand_functions(tail, counters1, [{attr, fun.(seq_next)}|acc])
+  defp expand_functions([{key, val}|tail], counters, acc)
+  when is_function(val) do
+    seq_next = (Keyword.get(counters, key) || 0) + 1
+    counters = Keyword.put(counters, key, seq_next)
+    expand_functions(tail, counters, [{key, val.(seq_next)}|acc])
   end
-  defp expand_functions([{_k, _v} = h|t], counters, acc) do
-    expand_functions(t, counters, [h|acc])
+  defp expand_functions([{_key, _val} = head|tail], counters, acc) do
+    expand_functions(tail, counters, [head|acc])
   end
 end
