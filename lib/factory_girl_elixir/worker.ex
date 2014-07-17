@@ -48,7 +48,7 @@ defmodule FactoryGirlElixir.Worker do
   end
 
   defp expand_functions(attributes, counters) do
-    expand_functions(attributes, counters, [])
+    expand_functions(attributes, counters, %{})
   end
 
   defp expand_functions([], counters, acc), do: {counters, acc}
@@ -56,9 +56,11 @@ defmodule FactoryGirlElixir.Worker do
   when is_function(val) do
     seq_next = (Keyword.get(counters, key) || 0) + 1
     counters = Keyword.put(counters, key, seq_next)
-    expand_functions(tail, counters, [{key, val.(seq_next)}|acc])
+    acc = Dict.put(acc, key, val.(seq_next))
+    expand_functions(tail, counters, acc)
   end
-  defp expand_functions([{_key, _val} = head|tail], counters, acc) do
-    expand_functions(tail, counters, [head|acc])
+  defp expand_functions([{key, val}|tail], counters, acc) do
+    acc = Dict.put(acc, key, val)
+    expand_functions(tail, counters, acc)
   end
 end

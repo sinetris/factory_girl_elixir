@@ -15,14 +15,14 @@ defmodule FactoryGirlElixirTest do
   end
 
   test "factories" do
-    assert "secret" == Factory.attributes_for(:user)[:password]
-    assert "bob" == Factory.attributes_for(:assets)[:name]
+    assert "secret" == Factory.attributes_for(:user).password
+    assert "bob" == Factory.attributes_for(:assets).name
   end
 
   test "generates a sequence" do
     FactoryGirlElixir.Worker.reset
 
-    assert "foo1@example.com" == Factory.attributes_for(:user)[:email]
-    assert "foo2@example.com" == Factory.attributes_for(:user)[:email]
+    assert "foo1@example.com" == Factory.attributes_for(:user).email
+    assert "foo2@example.com" == Factory.attributes_for(:user).email
   end
 end
