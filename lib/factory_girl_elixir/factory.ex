@@ -8,7 +8,8 @@ defmodule FactoryGirlElixir.Factory do
       end
 
       def parametrize(factory) do
-        Enum.traverse(factory, &parametrized/1)
+        Enum.map(factory, &parametrized/1)
+        |> Enum.into(%{})
       end
 
       defp parametrized({key, val})

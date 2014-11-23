@@ -4,7 +4,7 @@ defmodule FactoryGirlElixir.Mixfile do
   def project do
     [app: :factory_girl_elixir,
      version: "0.0.1",
-     elixir: "~> 0.14.2",
+     elixir: "~> 1.0",
      deps: deps]
   end
 
