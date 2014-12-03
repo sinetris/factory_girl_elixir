@@ -5,6 +5,7 @@ defmodule FactoryGirlElixirTest do
     use FactoryGirlElixir.Factory
 
     factory :user do
+      field :name, "joe"
       field :password, "secret"
       field :email, &("foo#{&1}@example.com")
     end
@@ -34,7 +35,25 @@ defmodule FactoryGirlElixirTest do
   test "parametrize factory with sequence" do
     FactoryGirlElixir.Worker.reset
 
-    parametrized_user = %{"email" => "foo1@example.com", "password" => "secret"}
+    parametrized_user = %{"email" => "foo1@example.com", "password" => "secret", "name" => "joe"}
     assert parametrized_user == Factory.attributes_for(:user) |> Factory.parametrize
+  end
+
+  test "override attributes" do
+    FactoryGirlElixir.Worker.reset
+
+    user_attributes = %{email: "foo1@example.com", password: "not-secret", name: "andrea"}
+    assert user_attributes == Factory.attributes_for(:user, password: "not-secret", name: "andrea")
+  end
+
+  test "overriding dinamic attributes don't increment counter" do
+    FactoryGirlElixir.Worker.reset
+
+    user_attributes = %{email: "foo1@example.com", password: "secret", name: "joe"}
+    assert user_attributes == Factory.attributes_for(:user)
+    user_attributes = %{email: "user@example.com", password: "secret", name: "joe"}
+    assert user_attributes == Factory.attributes_for(:user, email: "user@example.com")
+    user_attributes = %{email: "foo2@example.com", password: "secret", name: "joe"}
+    assert user_attributes == Factory.attributes_for(:user)
   end
 end

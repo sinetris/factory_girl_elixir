@@ -15,8 +15,8 @@ defmodule FactoryGirlElixir.Worker do
     GenServer.call(:factory_girl, {:put, {factory, attribute}})
   end
 
-  def get(factory) do
-    GenServer.call(:factory_girl, {:get, factory})
+  def get(factory, override_attributes) do
+    GenServer.call(:factory_girl, {:get, factory, override_attributes})
   end
 
   def reset do
@@ -37,8 +37,9 @@ defmodule FactoryGirlElixir.Worker do
     {:reply, :ok, new_state}
   end
 
-  def handle_call({:get, factory}, _from, state) do
+  def handle_call({:get, factory, override_attributes}, _from, state) do
     attributes = Keyword.get(state[:attributes], factory) || []
+    attributes = Dict.merge(attributes, override_attributes)
 
     counters = state[:counters][factory] || []
     {counters, reply} = expand_functions(attributes, counters)

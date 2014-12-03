@@ -4,7 +4,7 @@
 
 Minimal implementation of Ruby's [factory_girl](http://github.com/thoughtbot/factory_girl) in Elixir.
 
-This is a rewrite of the [factory_boy](https://github.com/inkr/factory_boy) project to make it work on Elixir v0.14.x.
+This is a rewrite of the [factory_boy](https://github.com/inkr/factory_boy) project to make it work on Elixir v1.0.x.
 
 ## Usage
 
@@ -13,7 +13,7 @@ Add FactoryGirlElixir as a dependency in your `mix.exs` file.
 ```elixir
 defp deps do
   [
-    {:factory_girl_elixir, "~> 0.1.0"}
+    {:factory_girl_elixir, "~> 0.1.1"}
   ]
 end
 ```
@@ -56,6 +56,12 @@ Then query the module to get a list of attributes for your record
 ```elixir
 user = Factory.attributes_for(:user) #=> %{password: "secret", username: "username1", email: "foo1@example.com"}
 parametrized_user = user |> Factory.parametrize #=> %{"email" => "foo1@example.com", "password" => "secret", "username" => "username1"}
+```
+
+You can override attributes
+
+```elixir
+user = Factory.attributes_for(:user, email: "user@example.org") #=> %{password: "secret", username: "username1", email: "user@example.org"}
 ```
 
 ## Contributing
