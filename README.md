@@ -55,13 +55,15 @@ Then query the module to get a list of attributes for your record
 
 ```elixir
 user = Factory.attributes_for(:user) #=> %{password: "secret", username: "username1", email: "foo1@example.com"}
-parametrized_user = user |> Factory.parametrize #=> %{"email" => "foo1@example.com", "password" => "secret", "username" => "username1"}
+parametrized_user = user |> Factory.parametrize
+#=> %{"email" => "foo1@example.com", "password" => "secret", "username" => "username1"}
 ```
 
 You can override attributes
 
 ```elixir
-user = Factory.attributes_for(:user, email: "user@example.org") #=> %{password: "secret", username: "username1", email: "user@example.org"}
+user = Factory.attributes_for(:user, email: "user@example.org")
+#=> %{password: "secret", username: "username1", email: "user@example.org"}
 ```
 
 ## Contributing
